@@ -1,11 +1,20 @@
 # coap2seis
 
-Bridge between Grillo seismic sensors (CoAP/UDP) and Earthworm shared memory rings. Also supports miniSEED file output for ObsPy workflows.
+Ingests seismic data from Grillo sensors via CoAP/UDP and writes to pluggable backends.
 
 ```
-Grillo Sensor --CoAP/UDP--> aiocoap server --> parse JSON --> buffer --> queue --> Writer backend
-                                                                                   ├── PyEW → Earthworm Ring
-                                                                                   └── miniSEED → files
+Grillo Sensor
+    │
+    │ CoAP/UDP
+    ▼
+aiocoap server
+    │
+    ├── parse JSON
+    ├── buffer samples
+    ▼
+Writer backend
+    ├── PyEW → Earthworm Ring
+    └── miniSEED → files
 ```
 
 ## Install
