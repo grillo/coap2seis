@@ -100,7 +100,11 @@ class CoAP2EW:
 
         self._packet_count += 1
         if self._packet_count == 1:
-            logger.info("First packet from %s (%s.%s)", dev_id, network, station)
+            logger.info("First packet from %s (%s.%s) sr=%d ch=%s",
+                        dev_id, network, station, packet.sample_rate,
+                        ",".join(packet.channels.keys()))
+        if self._packet_count % 100 == 0:
+            logger.info("Received %d packets from %s", self._packet_count, dev_id)
 
         for chan_code, samples in packet.channels.items():
             buf_key = (dev_id, chan_code)
@@ -190,6 +194,9 @@ class CoAP2EW:
                     sample_rate=msg.sample_rate,
                     start_time=msg.start_time,
                 )
+                logger.info("Wrote %s.%s.%s.%s %d samples",
+                            msg.network, msg.station, msg.location, msg.channel,
+                            len(msg.samples))
             except Exception:
                 logger.exception("Failed to write wave")
 
