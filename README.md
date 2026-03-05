@@ -15,6 +15,9 @@ pip install -e .
 
 # For miniSEED output, also install ObsPy:
 pip install obspy
+
+# Note: ObsPy requires setuptools < 82 (pkg_resources was removed in 82)
+pip install "setuptools<82"
 ```
 
 PyEW must be installed separately alongside a working Earthworm installation.
