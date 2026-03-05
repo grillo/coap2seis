@@ -67,6 +67,9 @@ class SensorDataResource(aiocoap.resource.Resource, aiocoap.resource.PathCapable
             return aiocoap.Message(code=aiocoap.BAD_REQUEST,
                                    payload=b"Empty payload")
 
+        logger.debug("Raw payload from %s (path=%s): %s",
+                      device_id or "unknown", path, request.payload[:500])
+
         try:
             await self._callback(device_type, device_id, request.payload)
         except ValueError as e:

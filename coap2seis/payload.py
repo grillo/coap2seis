@@ -48,9 +48,10 @@ def parse_json_payload(data: bytes, device_type: str | None = None) -> SensorPac
     if not isinstance(timestamp_us, int) or timestamp_us == 0:
         raise ValueError("Missing or zero field 't' (timestamp)")
 
-    network = obj.get("n")
-    if not network or not isinstance(network, str):
-        raise ValueError("Missing or empty field 'n' (network)")
+    # Network is optional — config override used when empty
+    network = obj.get("n", "")
+    if not isinstance(network, str):
+        network = ""
 
     station = obj.get("st")
     if not station or not isinstance(station, str):

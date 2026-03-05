@@ -75,13 +75,13 @@ class TestParseInvalidPayload:
         with pytest.raises(ValueError, match="'t'"):
             parse_json_payload(data)
 
-    def test_missing_network(self):
+    def test_missing_network_defaults_empty(self):
         data = json.dumps({
             "d": "AABB", "t": 1, "st": "S", "sr": 100,
             "HNE": [1], "HNN": [2], "HNZ": [3],
         }).encode()
-        with pytest.raises(ValueError, match="'n'"):
-            parse_json_payload(data)
+        pkt = parse_json_payload(data)
+        assert pkt.network == ""
 
     def test_missing_station(self):
         data = json.dumps({
