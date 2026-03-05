@@ -7,7 +7,7 @@ Grillo Sensor
     │
     │ CoAP/UDP
     ▼
-aiocoap server
+coap2seis
     │
     ├── parse JSON
     ├── buffer samples
