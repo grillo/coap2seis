@@ -45,8 +45,9 @@ def parse_json_payload(data: bytes, device_type: str | None = None) -> SensorPac
         raise ValueError("Missing or empty field 'd' (device_id)")
 
     timestamp_us = obj.get("t")
-    if not isinstance(timestamp_us, int) or timestamp_us == 0:
+    if not isinstance(timestamp_us, (int, float)) or timestamp_us == 0:
         raise ValueError("Missing or zero field 't' (timestamp)")
+    timestamp_us = int(timestamp_us)
 
     # Network is optional — config override used when empty
     network = obj.get("n", "")
@@ -58,8 +59,9 @@ def parse_json_payload(data: bytes, device_type: str | None = None) -> SensorPac
         raise ValueError("Missing or empty field 'st' (station)")
 
     sample_rate = obj.get("sr")
-    if not isinstance(sample_rate, int) or sample_rate <= 0:
+    if not isinstance(sample_rate, (int, float)) or sample_rate <= 0:
         raise ValueError("Missing or invalid field 'sr' (sample_rate), must be > 0")
+    sample_rate = int(sample_rate)
 
     # Channel data
     channels: dict[str, list[int]] = {}
