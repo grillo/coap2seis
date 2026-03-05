@@ -38,19 +38,26 @@ def main():
     parser.add_argument(
         "-o", "--output",
         choices=OUTPUT_MODES,
-        default="pyew",
-        help="Output backend (default: pyew)",
+        default=None,
+        help="Output backend: pyew or miniseed",
     )
     args = parser.parse_args()
 
     if args.config:
         config = Config.from_yaml(args.config)
-        # CLI --output overrides config file
         if args.output:
             config.output = args.output
             config.validate()
     else:
-        config = Config.from_interactive(output=args.output)
+        output = args.output
+        if output is None:
+            try:
+                val = input(f"Output backend ({', '.join(OUTPUT_MODES)}) [miniseed]: ").strip()
+                output = val if val and val in OUTPUT_MODES else "miniseed"
+            except (EOFError, KeyboardInterrupt):
+                print()
+                sys.exit(0)
+        config = Config.from_interactive(output=output)
 
     logging.basicConfig(
         level=getattr(logging, config.log_level.upper(), logging.INFO),

@@ -30,28 +30,24 @@ python -m coap2seis
 Prompts for settings with sensible defaults — just hit Enter to accept:
 
 ```
+Output backend (pyew, miniseed) [miniseed]:
 CoAP port [5684]:
-Earthworm ring [WAVE_RING]:
-Module ID [150]:
-Installation ID [141]:
+miniSEED output dir [./mseed_out]:
 Network [<sensor>]:
 Location code [00]:
-Heartbeat interval [30]:
 ```
 
-### Config file
+Choosing `pyew` instead prompts for Earthworm-specific settings (ring name, module ID, installation ID).
+
+### Skip prompts with CLI flags
 
 ```bash
-python -m coap2seis -c config/coap2seis.yaml.example
+python -m coap2seis --output miniseed     # miniSEED files (requires obspy)
+python -m coap2seis --output pyew          # Earthworm ring (requires PyEW)
+python -m coap2seis -c config/coap2seis.yaml.example  # from config file
 ```
 
-### miniSEED output
-
-```bash
-python -m coap2seis --output miniseed
-```
-
-Writes `{net}.{sta}.{loc}.{cha}.{date}.mseed` files to a directory. ObsPy reads these natively.
+miniSEED writes `{net}.{sta}.{loc}.{cha}.{date}.mseed` files to a directory. ObsPy reads these natively.
 
 ## SCNL codes
 
