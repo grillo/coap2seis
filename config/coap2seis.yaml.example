@@ -1,0 +1,32 @@
+# coap2seis configuration
+# Output backend: "pyew" (Earthworm) or "miniseed" (file output)
+output: pyew
+
+coap:
+  port: 5684
+
+# Earthworm settings (only used when output: pyew)
+earthworm:
+  ring_name: "WAVE_RING"
+  module_id: 150
+  installation_id: 141
+  heartbeat_interval: 30
+
+# miniSEED settings (only used when output: miniseed)
+miniseed:
+  output_dir: "./mseed_out"
+
+# Network override — blank means use whatever the sensor sends
+network: ""
+
+# Location code — sensors don't send this, default "00"
+location: "00"
+
+buffer:
+  # Flush when buffer reaches this many samples (~2s at 125 Hz)
+  target_samples: 250
+  # Force flush after this many seconds regardless of sample count
+  max_age_seconds: 1.0
+
+logging:
+  level: "INFO"

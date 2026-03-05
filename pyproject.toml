@@ -1,0 +1,23 @@
+[build-system]
+requires = ["setuptools>=68.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "coap2seis"
+version = "0.1.0"
+description = "Grillo CoAP seismic data bridge"
+requires-python = ">=3.9"
+dependencies = [
+    "aiocoap",
+    "PyYAML",
+    "numpy",
+]
+
+[project.optional-dependencies]
+dev = ["pytest", "pytest-asyncio"]
+
+[project.scripts]
+coap2seis = "coap2seis.__main__:main"
+
+[tool.setuptools]
+packages = ["coap2seis"]

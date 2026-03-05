@@ -1,0 +1,17 @@
+[Unit]
+Description=Grillo CoAP to Earthworm bridge
+After=network.target
+
+[Service]
+Type=simple
+User=ew
+# Source Earthworm environment if using pyew output
+EnvironmentFile=-/etc/earthworm/ew_env.sh
+ExecStart=/usr/bin/python3 -m coap2seis -c /etc/coap2seis/coap2seis.yaml
+Restart=on-failure
+RestartSec=5
+# Allow binding to ports < 1024 if needed
+AmbientCapabilities=CAP_NET_BIND_SERVICE
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,5 @@
+aiocoap
+PyYAML
+numpy
+pytest
+pytest-asyncio
